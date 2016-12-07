@@ -9,13 +9,14 @@ from werkzeug import check_password_hash, generate_password_hash
 # Import the database object from the main app module
 from app import db
 
-from app.inventory.forms import InventoryForm
+from app.modules.inventory.forms import InventoryForm
 
 # Import module models (i.e. User)
-from app.inventory.models import Inventory
+from app.modules.inventory.models import Inventory
 
 # Define the blueprint: 'auth', set its url prefix: app.url/auth
 from . import inventory
+from app.modules import principal_menu
 
 # Set the route and accepted methods
 @inventory.route('/home/', methods=['GET', 'POST'])
@@ -23,4 +24,6 @@ from . import inventory
 def home():
     print 'home'
     form = InventoryForm(request.form)
-    return render_template("inventory/index.html", form=form)
+    return render_template("inventory/index.html",
+                           form=form,
+                           menu=principal_menu())

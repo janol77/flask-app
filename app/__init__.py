@@ -30,7 +30,7 @@ def create_app():
     csrf.init_app(app)
     # Register blueprint(s)
     login_manager.init_app(app)
-    from .inventory import inventory as inventory_blueprint
+    from .modules.inventory import inventory as inventory_blueprint
     app.register_blueprint(inventory_blueprint, url_prefix='/inventory')
     from login import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
@@ -40,11 +40,9 @@ def create_app():
     def index():
         return redirect(url_for('inventory.home'))
 
-
     # Sample HTTP error handling
     @app.errorhandler(404)
     def not_found(error):
         return render_template('404.html'), 404
-
 
     return app
