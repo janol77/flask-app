@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentellela Alela! | </title>
+    <title>Sistema Optica | </title>
 
     <!-- Bootstrap -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
@@ -36,7 +36,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentellela Alela!</span></a>
+              <a href="{{url_for("index")}}" class="site_title"><i class="fa fa-paw"></i> <span>Sistema Optica!</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -47,8 +47,8 @@
                 <img src="/static/images/img.jpg" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <span>Bienvenido,</span>
+                <h2>{{current_user.name}}</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -195,18 +195,18 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="/static/images/img.jpg" alt="">John Doe
+                    <img src="/static/images/img.jpg" alt="">{{current_user.name}}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="javascript:;"> Profile</a></li>
+                    <li><a href="javascript:;"> Perfil</a></li>
                     <li>
                       <a href="javascript:;">
                         <span class="badge bg-red pull-right">50%</span>
-                        <span>Settings</span>
+                        <span>Configuración</span>
                       </a>
                     </li>
-                    <li><a href="javascript:;">Help</a></li>
+                    <li><a href="javascript:;">Ayuda</a></li>
                     <li><a href="{{url_for("auth.logout")}}"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                   </ul>
                 </li>
@@ -221,7 +221,7 @@
                       <a>
                         <span class="image"><img src="/static/images/img.jpg" alt="Profile Image" /></span>
                         <span>
-                          <span>John Smith</span>
+                          <span>{{current_user.name}}</span>
                           <span class="time">3 mins ago</span>
                         </span>
                         <span class="message">
@@ -233,7 +233,7 @@
                       <a>
                         <span class="image"><img src="/static/images/img.jpg" alt="Profile Image" /></span>
                         <span>
-                          <span>John Smith</span>
+                          <span>{{current_user.name}}</span>
                           <span class="time">3 mins ago</span>
                         </span>
                         <span class="message">
@@ -245,7 +245,7 @@
                       <a>
                         <span class="image"><img src="/static/images/img.jpg" alt="Profile Image" /></span>
                         <span>
-                          <span>John Smith</span>
+                          <span>{{current_user.name}}</span>
                           <span class="time">3 mins ago</span>
                         </span>
                         <span class="message">
@@ -257,7 +257,7 @@
                       <a>
                         <span class="image"><img src="/static/images/img.jpg" alt="Profile Image" /></span>
                         <span>
-                          <span>John Smith</span>
+                          <span>{{current_user.name}}</span>
                           <span class="time">3 mins ago</span>
                         </span>
                         <span class="message">
@@ -287,7 +287,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>General Elements</h3>
+                <h3>Menu General</h3>
               </div>
 
               <div class="title_right">

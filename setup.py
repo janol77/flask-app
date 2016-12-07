@@ -7,5 +7,5 @@ setup(name="mantenedor-optica",
       platforms = ["any"],
       license = "GPLv3",
       packages = find_packages(),
-      install_requires = ["Flask==0.11.1", "flask-mongoengine==0.8"],
+      install_requires = ["Flask==0.11.1", "flask-mongoengine==0.8", "Flask-Login==0.4.0"],
       )

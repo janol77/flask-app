@@ -11,8 +11,7 @@ from wtforms.validators import Required, Email, EqualTo, Length
 # Define the login form (WTForms)
 
 class InventoryForm(Form):
-    optico = TextField('Email Address', [Email(),
-                Required(message='Forgot your email address?')])
+    optico = TextField('Optico', [Required(message='Debe ingresar nombre del optico')])
     tipo = SelectField('uno', choices=['uno','dos','tres'], coerce=unicode)
     ean = TextField('Codigo de barra', [Length(max=10),
-                Required(message='Forgot your email address?')])
+                Required(message='Debe ingresar el codigo de barra')])

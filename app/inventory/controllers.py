@@ -15,11 +15,7 @@ from app.inventory.forms import InventoryForm
 from app.inventory.models import Inventory
 
 # Define the blueprint: 'auth', set its url prefix: app.url/auth
-inventory = Blueprint('inventory', __name__, url_prefix='/inventory')
-
-def init_app(app):
-    app.register_blueprint(inventory)
-    return app
+from . import inventory
 
 # Set the route and accepted methods
 @inventory.route('/home/', methods=['GET', 'POST'])
