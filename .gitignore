@@ -5,9 +5,6 @@ __pycache__/
 
 # js libraries
 app/static/vendors/
-app/static/css/
-app/static/fonts/
-app/static/js/
 
 # C extensions
 *.so
