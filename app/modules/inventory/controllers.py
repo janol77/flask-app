@@ -18,12 +18,21 @@ from app.modules.inventory.models import Inventory
 from . import inventory
 from app.modules import principal_menu
 
+
 # Set the route and accepted methods
-@inventory.route('/home/', methods=['GET', 'POST'])
+@inventory.route('/list', methods=['GET'])
 @login_required
-def home():
-    print 'home'
+def list():
     form = InventoryForm(request.form)
-    return render_template("inventory/index.html",
+    return render_template("inventory/list.html",
+                           form=form,
+                           menu=principal_menu())
+
+# Set the route and accepted methods
+@inventory.route('/create', methods=['GET'])
+@login_required
+def create():
+    form = InventoryForm(request.form)
+    return render_template("inventory/create.html",
                            form=form,
                            menu=principal_menu())

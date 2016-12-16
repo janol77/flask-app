@@ -7,6 +7,8 @@ from . import controllers
 
 config = {}
 config['name'] = "Inventario"
+config['menu'] = {'Lista': 'inventory.list',
+                  'Crear': 'inventory.create'}
 
 def get_config():
-	return config
+    return config

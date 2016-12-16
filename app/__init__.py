@@ -4,6 +4,7 @@ from db import db
 from flask import Flask, render_template, redirect, url_for
 from flask_wtf.csrf import CsrfProtect
 from login import login_manager
+from .modules import principal_menu
 
 
 def create_app():
@@ -32,13 +33,16 @@ def create_app():
     login_manager.init_app(app)
     from .modules.inventory import inventory as inventory_blueprint
     app.register_blueprint(inventory_blueprint, url_prefix='/inventory')
+    from .modules.user import user as user_blueprint
+    app.register_blueprint(user_blueprint, url_prefix='/user')
     from login import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
     @app.route("/", methods=['GET'])
     @login_required
     def index():
-        return redirect(url_for('inventory.home'))
+        return render_template("index.html",
+                               menu=principal_menu())
 
     # Sample HTTP error handling
     @app.errorhandler(404)
