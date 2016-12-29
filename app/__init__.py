@@ -1,5 +1,6 @@
 from flask_login import login_required
 from db import db
+import os
 # Import flask and template operators
 from flask import Flask, render_template, redirect, url_for
 from flask_wtf.csrf import CsrfProtect
@@ -7,23 +8,13 @@ from login import login_manager
 from .modules import principal_menu
 
 
-def create_app():
+def create_app(config="../config.ini"):
     app = Flask(__name__)
     app.config.from_object(__name__)
-    app.config['MONGODB_SETTINGS'] = {'DB': 'testing'}
-    app.config['TESTING'] = True
-    app.config['SECRET_KEY'] = 'flask+mongoengine=<3'
-    app.debug = True
-    app.config['DEBUG_TB_PANELS'] = (
-        'flask_debugtoolbar.panels.versions.VersionDebugPanel',
-        'flask_debugtoolbar.panels.timer.TimerDebugPanel',
-        'flask_debugtoolbar.panels.headers.HeaderDebugPanel',
-        'flask_debugtoolbar.panels.request_vars.RequestVarsDebugPanel',
-        'flask_debugtoolbar.panels.template.TemplateDebugPanel',
-        'flask_debugtoolbar.panels.logger.LoggingPanel',
-        'flask_mongoengine.panels.MongoDebugPanel'
-    )
-    app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+    if os.path.exists(os.path.dirname(__file__) + '/' + config):
+        app.config.from_pyfile(config)
+    else:
+        print("The app does not have a config.ini file")
     # Define the WSGI application object
     db.init_app(app)
     # csrf protection
