@@ -7,17 +7,17 @@ from flask_login import login_required
 from werkzeug import check_password_hash, generate_password_hash
 
 # Import the database object from the main app module
-from app import db
 
-from app.modules.inventory.forms import InventoryForm
+
+from forms import InventoryForm
 
 # Import module models (i.e. User)
-from app.modules.inventory.models import Inventory
+from models import Inventory
 
-# Define the blueprint: 'auth', set its url prefix: app.url/auth
+# Define the blueprint: 'auth', set its url prefix: url/auth
 from . import inventory
+# from inventory import principal_menu
 from app.modules import principal_menu
-
 
 # Set the route and accepted methods
 @inventory.route('/list', methods=['GET'])

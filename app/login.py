@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from app.modules.user.forms import LoginForm
+from modules.user.forms import LoginForm
 
-from app.modules.user.models import User
+from modules.user.models import User
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 

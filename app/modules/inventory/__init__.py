@@ -3,7 +3,7 @@ from flask import Blueprint
 
 inventory = Blueprint('inventory', __name__)
 
-from . import controllers
+from controllers import *
 
 config = {}
 config['name'] = "Inventario"

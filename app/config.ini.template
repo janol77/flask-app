@@ -1,9 +1,9 @@
-MONGODB_SETTINGS = {'DB': 'testing'}
+MONGODB_SETTINGS = {'DB': 'demo1-dev'}
 TESTING = True
 SECRET_KEY = 'flask+mongoengine=<3'
 DEBUG = True
 HOST = '0.0.0.0'
-PORT = 8080
+PORT = 7000
 DEBUG_TB_PANELS = (
         'flask_debugtoolbar.panels.versions.VersionDebugPanel',
         'flask_debugtoolbar.panels.timer.TimerDebugPanel',

@@ -72,12 +72,12 @@ Archivo de configuración para supervisord y se añade formula para utilizar con
 
 ```
 [program:flask-app.domain.com]
-;command=/home/<user>/.virtualenvs/flask-app/bin/gunicorn -w 4 -b 0.0.0.0:6001 --timeout 180 --error-logfile /var/www/flask-app.domain.com/gunicorn_error.log --log-level info run:app
-command=/home/<user>/.virtualenvs/flask-app/bin/python /var/www/flask-app.domain.com/run.py
+;command=/home/<user>/.virtualenvs/flask-app/bin/gunicorn -w 4 -b 0.0.0.0:6001 --timeout 180 --error-logfile /var/www/flask-app.domain.com/gunicorn_error.log --log-level info server:app
+command=/home/<user>/.virtualenvs/flask-app/bin/python /var/www/flask-app.domain.com/app/server.py
 autorestart=false
 user=jano
 autostart=false
-directory=/var/www/flask-app.domain.com/
+directory=/var/www/flask-app.domain.com/app/
 logfile=/var/log/supervisor/flask-app.domain.com.log
 redirect_stderr=true
 stopasgroup=true
