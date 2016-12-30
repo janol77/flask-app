@@ -38,7 +38,7 @@ Generar el archivo de configuración de la aplicación
 
 
 ```
-cp config.ini.template config.ini
+cp app/config.ini.template app/config.ini
 ```
 
 Crear ambiente de la aplicación
@@ -55,11 +55,18 @@ Instalar aplicación
 python setup.py install
 ```
 
-Correr aplicación
+Correr aplicación sin gunicorn
 
 
 ```
-python run.py
+sh run.sh
+```
+
+Correr aplicación con gunicorn
+
+```
+gunicorn -w 4 -b 0.0.0.0:7000 --timeout 180 --error-logfile ../gunicorn_error.log --log-level info server:app
+
 ```
 
 ## Adicionales
@@ -72,10 +79,10 @@ Archivo de configuración para supervisord y se añade formula para utilizar con
 
 ```
 [program:flask-app.domain.com]
-;command=/home/<user>/.virtualenvs/flask-app/bin/gunicorn -w 4 -b 0.0.0.0:6001 --timeout 180 --error-logfile /var/www/flask-app.domain.com/gunicorn_error.log --log-level info server:app
+;command=/home/<user>/.virtualenvs/flask-app/bin/gunicorn -w 4 -b 0.0.0.0:7000 --timeout 180 --error-logfile /var/www/flask-app.domain.com/gunicorn_error.log --log-level info server:app
 command=/home/<user>/.virtualenvs/flask-app/bin/python /var/www/flask-app.domain.com/app/server.py
 autorestart=false
-user=jano
+user=<user>
 autostart=false
 directory=/var/www/flask-app.domain.com/app/
 logfile=/var/log/supervisor/flask-app.domain.com.log
@@ -100,7 +107,7 @@ server {
 
   location / {
      client_max_body_size 50M;
-     proxy_pass http://localhost:<port>;
+     proxy_pass http://localhost:7000;
   }
   location /static/ {
       root /var/www/flask-app.domain.com/app;

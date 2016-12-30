@@ -1,9 +1,10 @@
 from flask_login import login_required
 from app.db import db
 from login import login_manager
+
 import os
 # Import flask and template operators
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template
 from flask_wtf.csrf import CsrfProtect
 from modules import principal_menu
 
@@ -43,8 +44,8 @@ def create_app(config="config.ini"):
     return app
 
 app = create_app()
+
 if __name__ == "__main__":
-    print app.url_map
     app.run(host=app.config.get('HOST', '0.0.0.0'),
             port=app.config.get('PORT', 5000),
             debug=app.config.get('DEBUG', False)
