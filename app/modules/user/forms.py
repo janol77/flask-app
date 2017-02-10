@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Import Form and RecaptchaField (optional)
 from flask_wtf import FlaskForm as Form
 # , RecaptchaField
@@ -12,21 +13,23 @@ from wtforms.validators import Required, Email, Length
 # Define the login form (WTForms)
 
 class UserForm(Form):
-    email = TextField('Email Address',
+    email = TextField('Correo Electronico',
                       [Email(),
-                       Required(message='Forgot your email address?')])
+                       Required(message='Debe ingresar un correo electrónico')])
     name = TextField('Nombre',
-                     [Length(max=10),
-                      Required(message='Forgot your Password?')])
+                     [Length(max=25),
+                      Required(message='Debe ingresar un Nombre')])
     password = PasswordField('Password',
-                             [Length(max=10),
-                              Required(message='Forgot your Password?')])
+                             [Length(max=8,
+                                     min=6,
+                                     message=u'La contraseña debe tener entre 6 y 8 carácteres'),
+                              Required(message=u'Debe ingresar una contraseña válida')])
 
 
 class LoginForm(Form):
     email = TextField('Email Address',
                       [Email(),
-                       Required(message='Forgot your email address?')])
+                       Required(message='Debe ingresar un correo electrónico')])
     password = PasswordField('Password',
-                             [Length(max=10),
-                              Required(message='Forgot your Password?')])
+                             [Length(max=8, min=6),
+                              Required(message=u'Debe ingresar una contraseña válida')])

@@ -27,56 +27,74 @@
                   </div>
                   <div class="x_content">
                     <br />
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
+                    <form id="demo-form2" data-parsley-validate method="POST" action="{{url_for("user.create")}}" class="form-horizontal form-label-left">
+                     {{ form.hidden_tag() }}
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="{{form.name.name}}">{{form.name.label}}
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                      {% if form.name.errors %}
+                        {{form.name(class="form-control col-md-7 col-xs-12", style="border:1px solid #a94442")}}
+                      {% else %}
+                        {{form.name(class="form-control col-md-7 col-xs-12")}}
+                      {% endif %}
                         </div>
+                          {% if form.name.errors %}
+                        <ul class="errors text-danger">
+                          {% for error in form.name.errors %}
+                            <li>{{ error }}</li>
+                          {% endfor %}
+                        </ul>
+                        {% endif %}
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="{{form.email.name}}">{{form.email.label}}
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
+                      {% if form.email.errors %}
+                        {{form.email(type="email", class="form-control col-md-7 col-xs-12", style="border:1px solid #a94442")}}
+                      {% else %}
+                        {{form.email(type="email", class="form-control col-md-7 col-xs-12")}}
+                      {% endif %}
                         </div>
+                        {% if form.email.errors %}
+                        <ul class="errors text-danger">
+                          {% for error in form.email.errors %}
+                            <li>{{ error }}</li>
+                          {% endfor %}
+                        </ul>
+                        {% endif %}
                       </div>
-                      <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name / Initial</label>
+                      <div class="item form-group">
+                        <label for="{{form.password.name}}" class="control-label col-md-3">{{form.password.label}}</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
+                      {% if form.password.errors %}
+                        {{form.password(class="form-control col-md-7 col-xs-12", style="border:1px solid #a94442")}}
+                      {% else %}
+                        {{form.password(class="form-control col-md-7 col-xs-12")}}
+                      {% endif %}                        
                         </div>
+                        {% if form.password.errors %}
+                        <ul class="errors text-danger">
+                          {% for error in form.password.errors %}
+                            <li>{{ error }}</li>
+                          {% endfor %}
+                        </ul>
+                        {% endif %}                        
                       </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+                      <div class="item form-group">
+                        <label for="password2" class="control-label col-md-3 col-sm-3 col-xs-12">Repita Password</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <div id="gender" class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                              <input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;
-                            </label>
-                            <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                              <input type="radio" name="gender" value="female"> Female
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                          <input id="password2" type="password" name="password2" data-validate-linked="password" class="form-control col-md-7 col-xs-12" required="required">
                         </div>
                       </div>
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                          <button type="submit" class="btn btn-primary">Cancel</button>
-                          <button type="submit" class="btn btn-success">Submit</button>
+                          <button type="submit" class="btn btn-primary">Cancelar</button>
+                          <button type="submit" class="btn btn-success">Guardar</button>
                         </div>
                       </div>
-
                     </form>
                   </div>
                 </div>
@@ -85,7 +103,43 @@
           </div>
         </div>
 {% endblock %}
+{% block scripts %}
+{{ super() }}
+    <!-- validator -->
+    <script src="/static/vendors/validator/validator.js"></script>
+    <!-- validator -->
+    <script>
+      // initialize the validator function
+      validator.message.date = 'not a real date';
 
+      // validate a field on "blur" event, a 'select' on 'change' event & a '.reuired' classed multifield on 'keyup':
+      $('form')
+        .on('blur', 'input[required], input.optional, select.required', validator.checkField)
+        .on('change', 'select.required', validator.checkField)
+        .on('keypress', 'input[required][pattern]', validator.keypress);
+
+      $('.multi.required').on('keyup blur', 'input', function() {
+        validator.checkField.apply($(this).siblings().last()[0]);
+      });
+
+      $('form').submit(function(e) {
+        e.preventDefault();
+        var submit = true;
+
+        // evaluate the form using generic validaing
+        if (!validator.checkAll($(this))) {
+          submit = false;
+        }
+
+        if (submit)
+          this.submit();
+
+        return false;
+      });
+    </script>
+    <!-- /validator -->
+
+{% endblock %}
 
 <!-- {% with errors = get_flashed_messages(category_filter=["success"]) %}
 {% if errors %}

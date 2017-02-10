@@ -3,10 +3,7 @@ from flask import Blueprint, request, render_template, \
                   flash, g, session, redirect, url_for, \
                   jsonify
 from flask_login import login_required
-from mongoengine.queryset.visitor import Q
 
-# Import password / encryption helper tools
-from werkzeug import check_password_hash, generate_password_hash
 import re
 # Import the database object from the main app module
 
@@ -66,13 +63,9 @@ def list():
         response["recordsFiltered"] = count
         response["data"] = result
         return jsonify(response)
-    elements = Inventory.objects.all()
-    form = InventoryForm(request.form)
     return render_template("inventory/list.html",
-                           form=form,
                            menu=principal_menu(),
                            config=config,
-                           elements=elements,
                            tipo_choices=dict(tipo_choices))
 
 

@@ -1,10 +1,15 @@
 from app.db import db
+from werkzeug import generate_password_hash
 
 
 class User(db.Document):
     name = db.StringField(required=True)
     password = db.StringField(required=True)
     email = db.StringField(required=True)
+
+    def generate_password(self):
+        """Calculate the password."""
+        self.password = generate_password_hash(self.password)
 
     def is_active(self):
         """True, as all users are active."""

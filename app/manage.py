@@ -25,16 +25,17 @@ manager = Manager(app)
 def init_db():
     """Inicializar la base de datos."""
 
-    password = generate_password_hash('admin')
+    password = 'admin'
     email = "admin@admin.cl"
     name = "Administrador"
     users = User.objects.filter(email=email)
     user = users.first()
     if not user:
-        User(email=email, name=name, password=password).save()
+        u = User(email=email, name=name, password=password)
+        u.generate_password()
+        u.save()
     else:
         print "Usuario Administrador creado anteriormente."
-
 
 
 if __name__ == "__main__":
