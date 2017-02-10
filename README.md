@@ -55,6 +55,13 @@ Instalar aplicación
 python setup.py install
 ```
 
+Inicializar la Base de datos
+
+
+```
+python manage.py init_db
+```
+
 Correr aplicación sin gunicorn
 
 

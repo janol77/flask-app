@@ -11,7 +11,6 @@ class User(db.Document):
         return True
 
     def get_id(self):
-    	# import pdb;pdb.set_trace()
         """Return the email address to satisfy Flask-Login's requirements."""
         return self.id.__str__()
 

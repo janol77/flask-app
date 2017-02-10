@@ -15,7 +15,7 @@ from forms import UserForm
 from models import User
 
 # Define the blueprint: 'auth', set its url prefix: url/auth
-from . import user
+from . import user, config
 from app.modules import principal_menu
 
 
@@ -26,7 +26,8 @@ def list():
     form = UserForm(request.form)
     return render_template("user/list.html",
                            form=form,
-                           menu=principal_menu())
+                           menu=principal_menu(),
+                           config=config)
 
 
 # Set the route and accepted methods
@@ -36,4 +37,5 @@ def create():
     form = UserForm(request.form)
     return render_template("user/create.html",
                            form=form,
-                           menu=principal_menu())
+                           menu=principal_menu(),
+                           config=config)
