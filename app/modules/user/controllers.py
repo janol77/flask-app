@@ -6,7 +6,7 @@ from flask_login import login_required
 
 import re
 # Import the database object from the main app module
-
+import json
 
 from forms import UserForm
 
@@ -25,10 +25,11 @@ from app.modules import principal_menu
 def list():
     """List Method."""
     if request.method == 'POST':
-        draw = int(request.form.get('draw'))
-        length = int(request.form.get('length'))
-        start = int(request.form.get('start'))
-        search = request.form.get('search[value]')
+        data = json.loads(request.form.get("args"))
+        draw = data['draw']
+        length = data['length']
+        start = data['start']
+        search = data['search']['value']
         result = []
         response = {}
         count = 0
@@ -83,8 +84,8 @@ def create():
         form.populate_obj(obj)
         obj.generate_password()
         User.objects.insert(obj)
+        flash("Usuario creado", "success")
         return redirect(url_for("user.list"))
-
     return render_template("user/create.html",
                            form=form,
                            menu=principal_menu(),

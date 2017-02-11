@@ -6,7 +6,7 @@ from flask_login import login_required
 
 import re
 # Import the database object from the main app module
-
+import json
 
 from forms import InventoryForm, tipo_choices
 
@@ -25,10 +25,11 @@ from app.modules import principal_menu
 def list():
     """List Method."""
     if request.method == 'POST':
-        draw = int(request.form.get('draw'))
-        length = int(request.form.get('length'))
-        start = int(request.form.get('start'))
-        search = request.form.get('search[value]')
+        data = json.loads(request.form.get("args"))
+        draw = data['draw']
+        length = data['length']
+        start = data['start']
+        search = data['search']['value']
         result = []
         response = {}
         count = 0
@@ -78,8 +79,8 @@ def create():
         obj = Inventory()
         form.populate_obj(obj)
         Inventory.objects.insert(obj)
+        flash("Elemento creado", "success")
         return redirect(url_for("inventory.list"))
-
     return render_template("inventory/create.html",
                            form=form,
                            menu=principal_menu(),
