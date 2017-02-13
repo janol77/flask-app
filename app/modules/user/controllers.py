@@ -8,7 +8,7 @@ import re
 # Import the database object from the main app module
 import json
 
-from forms import UserForm
+from forms import UserForm, EditUserForm
 
 # Import module models (i.e. User)
 from models import User
@@ -33,13 +33,13 @@ def list():
         result = []
         response = {}
         count = 0
-        total = User.objects.count()
+        total = User.objects.filter(deleted=False).count()
         keys = User._fields.keys()
         keys.remove('password')
         fields = keys[:]
         keys.remove('id')
         if search:
-            params = []
+            params = [{'deleted': False}]
             regex = re.compile('.*%s.*' % search)
             for key in keys:
                 params.append({key: regex})
@@ -54,7 +54,8 @@ def list():
                 print e
         else:
             try:
-                result = User.objects.only(*fields) \
+                result = User.objects.filter(deleted=False) \
+                                     .only(*fields) \
                                      .limit(length) \
                                      .skip(start)
                 count = total
@@ -83,10 +84,59 @@ def create():
         obj = User()
         form.populate_obj(obj)
         obj.generate_password()
+        obj.deleted = False
         User.objects.insert(obj)
         flash("Usuario creado", "success")
         return redirect(url_for("user.list"))
     return render_template("user/create.html",
+                           action="create",
                            form=form,
                            menu=principal_menu(),
                            config=config)
+
+
+@user.route('/edit/<string:key>', methods=['GET', 'POST'])
+@login_required
+def edit(key):
+    """Edit Method."""
+    try:
+        element = User.objects.filter(deleted=False,
+                                      id=key).first()
+    except Exception:
+        flash("Elemento No encontrado", "error")
+        return redirect(url_for("user.list"))
+    if request.method == 'GET':
+        form = EditUserForm(request.form, element)
+        return render_template("user/create.html",
+                               action="edit",
+                               form=form,
+                               menu=principal_menu(),
+                               config=config)
+    else:
+        form = EditUserForm(request.form)
+        if form.validate_on_submit():
+            form.populate_obj(element)
+            element.generate_password()
+            element.save()
+            flash("Elemento Actualizado", "success")
+            return redirect(url_for("user.list"))
+        return render_template("user/create.html",
+                               action="edit",
+                               form=form,
+                               menu=principal_menu(),
+                               config=config)
+
+
+@user.route('/delete/<string:key>', methods=['GET'])
+@login_required
+def delete(key):
+    """Delete Method."""
+    try:
+        element = User.objects.filter(deleted=False,
+                                      id=key).first()
+    except Exception:
+        flash("Elemento No encontrado", "error")
+        return redirect(url_for("user.list"))
+    element.update(deleted=True)
+    flash("Elemento Eliminado", "success")
+    return redirect(url_for("user.list"))

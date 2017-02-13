@@ -4,8 +4,9 @@ from werkzeug import generate_password_hash
 
 class User(db.Document):
     name = db.StringField(required=True)
-    password = db.StringField(required=True)
+    password = db.StringField()
     email = db.StringField(required=True)
+    deleted = db.BooleanField()
 
     def generate_password(self):
         """Calculate the password."""
