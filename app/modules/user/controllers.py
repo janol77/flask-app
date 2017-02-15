@@ -114,7 +114,10 @@ def edit(key):
                                config=config)
     else:
         form = EditUserForm(request.form)
-        if form.validate_on_submit():
+        if not element.check_email(form.email.data):
+            form.exist_mail()
+            flash("Email ya utilizado", "error")
+        elif form.validate_on_submit():
             form.populate_obj(element)
             element.generate_password()
             element.save()

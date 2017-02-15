@@ -2,7 +2,8 @@
 # Import Form and RecaptchaField (optional)
 from flask_wtf import FlaskForm as Form
 # , RecaptchaField
-
+from libs.validators import UniqueValidator
+from models import User
 # Import Form elements such as TextField and BooleanField (optional)
 from wtforms import TextField, PasswordField, ValidationError
 
@@ -24,8 +25,11 @@ from wtforms.validators import Required, Email, Length, DataRequired, EqualTo
 
 class UserForm(Form):
     email = TextField('Correo Electronico', [
-        Email(),
-        Required(message='Debe ingresar un correo electrónico')])
+        Email(message=u"El Correo Electronico no es Válido"),
+        Required(message='Debe ingresar un correo electrónico'),
+        UniqueValidator(User,
+                        'email',
+                        'El Correo ya se utilizo para otra cuenta')])
     name = TextField('Nombre',
                      [Length(max=25),
                       Required(message='Debe ingresar un Nombre')])
@@ -40,13 +44,17 @@ class UserForm(Form):
 
 class EditUserForm(Form):
     email = TextField('Correo Electronico', [
-        Email(),
+        Email(message=u"El Correo Electronico no es Válido"),
         Required(message='Debe ingresar un correo electrónico')])
     name = TextField('Nombre',
                      [Length(max=25),
                       Required(message='Debe ingresar un Nombre')])
     password = PasswordField(u'Nueva Contraseña')
     confirm = PasswordField(u'Repita Contraseña')
+
+    def exist_mail(self):
+        message = 'Ya existe una cuenta con el mismo mail'
+        self.email.errors += (message,)
 
     def validate_password(form, field):
         size = len(field.data)
@@ -60,8 +68,9 @@ class EditUserForm(Form):
 
 class LoginForm(Form):
     email = TextField('Email Address', [
-        Email(),
-        Required(message='Debe ingresar un correo electrónico')])
-    password = PasswordField('Password', [
-        Length(max=8, min=6),
-        DataRequired(message=u'Debe ingresar una contraseña válida')])
+        Email(message=u"El Correo Electronico no es Válido"),
+        Required(message='Debe ingresar un correo electrónico')],
+        render_kw={"placeholder": u"Ingrese su Email"})
+    password = PasswordField(u'Contraseña', [
+        DataRequired(message=u'Debe ingresar una contraseña válida')],
+        render_kw={"placeholder": u"Contraseña"})

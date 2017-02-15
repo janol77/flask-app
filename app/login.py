@@ -37,7 +37,7 @@ def login():
     # Here we use a class of some kind to represent and validate our
     # client-side form data. For example, WTForms is a library that will
     # handle this for us, and we use a custom LoginForm to validate.
-
+    # import pdb;pdb.set_trace()
     errors = {}
     form = LoginForm()
     if form.validate_on_submit():

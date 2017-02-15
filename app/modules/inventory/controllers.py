@@ -94,7 +94,6 @@ def create():
 @login_required
 def edit(key):
     """Edit Method."""
-    import pdb;pdb.set_trace()
     try:
         element = Inventory.objects.filter(deleted=False,
                                            id=key).first()

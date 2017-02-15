@@ -8,6 +8,17 @@ class User(db.Document):
     email = db.StringField(required=True)
     deleted = db.BooleanField()
 
+    def check_email(self, new_email):
+        """Unique Email."""
+        params = {'email': new_email,
+                  'deleted': False}
+        existing = self.__class__.objects.filter(**params).first()
+        if existing:
+            if self.id == existing.id:
+                return True
+            return False
+        return True
+
     def generate_password(self):
         """Calculate the password."""
         self.password = generate_password_hash(self.password)
