@@ -110,6 +110,21 @@
                         return a[data] 
                     },
                     "targets": 1
+                },
+                {
+                    // The `data` parameter refers to the data for the cell (defined by the
+                    // `data` option, which defaults to the column being worked with, in
+                    // this case `data: 0`.
+                    "render": function ( data, type, row ) {
+                        console.log(row._id.$oid);
+                        html = '<a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Ver </a>\
+                         <a href="'+'{{url_for("inventory.edit", key="")}}'+row._id.$oid+'" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>\
+                         <a href="'+'{{url_for("inventory.delete", key="")}}'+row._id.$oid+'" class="btn btn-danger btn-xs" onclick="return confirm(`Está seguro que desea borrar este Elemento?`);"><i class="fa fa-trash-o"></i> Eliminar </a>';
+                        return html;
+                    },
+                    "targets": 3,
+                    "orderable": false,
+                    "width": "20%"
                 }
             ],
             "columns": [
@@ -118,14 +133,7 @@
               { "data": "tipo","className":"tr" , // can be null or undefined
                   "defaultContent": "<i>Not set</i>"},
               { "data": "ean","className":"tr" , // can be null or undefined
-                  "defaultContent": "<i>Not set</i>"},
-              { "data": null, "className":"tr" ,
-                "defaultContent": '<a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>\
-                                   <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>\
-                                   <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>',
-                "orderable": false,
-                "width": "20%",
-              }
+                  "defaultContent": "<i>Not set</i>"}
               ]
         });
       });
