@@ -5,10 +5,16 @@ from flask_wtf import FlaskForm as Form
 from libs.validators import UniqueValidator
 from models import User
 # Import Form elements such as TextField and BooleanField (optional)
-from wtforms import TextField, PasswordField, ValidationError
+from wtforms import TextField, PasswordField, ValidationError, HiddenField
 
 # Import Form validators
-from wtforms.validators import Required, Email, Length, DataRequired, EqualTo
+from wtforms.validators import(
+    Required,
+    Email,
+    Length,
+    DataRequired,
+    EqualTo
+)
 
 
 # Define the login form (WTForms)
@@ -45,16 +51,16 @@ class UserForm(Form):
 class EditUserForm(Form):
     email = TextField('Correo Electronico', [
         Email(message=u"El Correo Electronico no es Válido"),
-        Required(message='Debe ingresar un correo electrónico')])
+        Required(message='Debe ingresar un correo electrónico'),
+        UniqueValidator(User,
+                        'email',
+                        'El Correo ya se utilizo para otra cuenta')])
     name = TextField('Nombre',
                      [Length(max=25),
                       Required(message='Debe ingresar un Nombre')])
     password = PasswordField(u'Nueva Contraseña')
     confirm = PasswordField(u'Repita Contraseña')
-
-    def exist_mail(self):
-        message = 'Ya existe una cuenta con el mismo mail'
-        self.email.errors += (message,)
+    id = HiddenField('id')
 
     def validate_password(form, field):
         size = len(field.data)
