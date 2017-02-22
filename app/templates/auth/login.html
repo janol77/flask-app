@@ -48,7 +48,7 @@
             <form method="POST" action="login" accept-charset="UTF-8" role="form">
               <h1>Login Form</h1>
               <div>
-                    {{ form.csrf_token }}
+                    {{ form.hidden_tag() }}
 
                       <div class="item form-group">
                       {% if form.email.errors %}

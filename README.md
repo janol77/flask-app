@@ -127,7 +127,8 @@ server {
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+python -m unittest -v tests.test_user
+python -m unittest -v tests.test_inventory
 
 ### Break down into end to end tests
 

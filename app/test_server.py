@@ -11,11 +11,11 @@ from modules import principal_menu
 
 def create_app(config="config.ini"):
     app = Flask(__name__, static_url_path='/static')
-    app.config.from_object(__name__)
-    if os.path.exists(config):
-        app.config.from_pyfile(config)
-    else:
-        print("The app does not have a config.ini file")
+    app.config.update(
+        MONGODB_SETTINGS={'DB': 'testapp'},
+        TESTING=True,
+        SECRET_KEY='flask+mongoengine=<3'
+    )
     # Define the WSGI application object
     db.init_app(app)
     # csrf protection

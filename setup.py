@@ -12,5 +12,6 @@ setup(name="demo1",
                           "mongoengine==0.10.6",
                           "flask-mongoengine==0.8",
                           "Flask-Login==0.4.0",
-                          "gunicorn==19.6.0"],
+                          "gunicorn==19.6.0",
+                          "pyquery==1.2.17"],
       )
