@@ -17,7 +17,12 @@ users = [{'name': 'Admin',
 
 products = [{'optico': 'Oakley',
              'tipo': 'sol',
-             'ean': '12345678'}]
+             'ean': '12345678',
+             'deleted': False},
+            {'optico': 'Arnette',
+             'tipo': 'contacto',
+             'ean': '12345678',
+             'deleted': False}]
 
 
 def init_users():
