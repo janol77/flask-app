@@ -127,8 +127,10 @@ server {
 
 ## Running the tests
 
-python -m unittest -v tests.test_user
-python -m unittest -v tests.test_inventory
+```
+python -m unittest2 -v tests.test_user
+python -m unittest2 -v tests.test_inventory
+```
 
 ### Break down into end to end tests
 
