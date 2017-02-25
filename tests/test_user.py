@@ -1,11 +1,11 @@
 """User Test."""
-import unittest
+import unittest2
 from app.test_server import app
 from pyquery import PyQuery
 from tools import init_users, randomword, remove_users, users
 
 
-class TestUser(unittest.TestCase):
+class TestUser(unittest2.TestCase):
     """User Test."""
 
     def setUp(self):
@@ -58,6 +58,7 @@ class TestUser(unittest.TestCase):
         data = {'email': self.email,
                 'name': randomword(8),
                 'password': '',
+                'rol': 'admin',
                 'confirm': '',
                 'id': self.users_ids[self.name]}
         response = self.client.post(
@@ -99,4 +100,4 @@ class TestUser(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest2.main()

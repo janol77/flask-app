@@ -9,10 +9,17 @@ import random
 users = [{'name': 'Admin',
           'email': 'admin@admin.cl',
           'password': 'admin',
+          'rol': 'admin',
           'deleted': False},
          {'name': 'Alejandro',
           'email': 'alejandro@alejandro.cl',
           'password': 'alejandro',
+          'rol': 'editor',
+          'deleted': False},
+         {'name': 'Alejandro2',
+          'email': 'alejandro2@alejandro.cl',
+          'password': 'alejandro2',
+          'rol': 'viewer',
           'deleted': False}]
 
 products = [{'optico': 'Oakley',

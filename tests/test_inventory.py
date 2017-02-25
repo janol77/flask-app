@@ -1,5 +1,5 @@
 """User Test."""
-import unittest
+import unittest2
 from app.test_server import app
 from pyquery import PyQuery
 from tools import (
@@ -13,7 +13,7 @@ from tools import (
 )
 
 
-class TestInventory(unittest.TestCase):
+class TestInventory(unittest2.TestCase):
     """User Test."""
 
     def setUp(self):
@@ -115,4 +115,4 @@ class TestInventory(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest2.main()
