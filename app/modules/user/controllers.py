@@ -1,7 +1,15 @@
 # Import flask dependencies
-from flask import Blueprint, request, render_template, \
-                  flash, g, session, redirect, url_for, \
-                  jsonify
+from flask import(
+    Blueprint,
+    request,
+    render_template,
+    flash,
+    g,
+    session,
+    redirect,
+    url_for,
+    jsonify
+)
 from flask_login import login_required
 
 import re
@@ -16,12 +24,14 @@ from models import User
 # Define the blueprint: 'auth', set its url prefix: url/auth
 from . import user, config
 from app.modules import principal_menu
+from app.login import admin
 
 
 # Set the route and accepted methods
 @user.route('/', methods=['GET'])
 @user.route('/list', methods=['GET', 'POST'])
 @login_required
+@admin.require(http_exception=403)
 def list():
     """List Method."""
     if request.method == 'POST':
@@ -77,6 +87,7 @@ def list():
 # Set the route and accepted methods
 @user.route('/create', methods=['GET', 'POST'])
 @login_required
+# @admina.require(http_exception=403)
 def create():
     """Create Method."""
     form = UserForm(request.form)
@@ -97,6 +108,7 @@ def create():
 
 @user.route('/edit/<string:key>', methods=['GET', 'POST'])
 @login_required
+# @admina.require(http_exception=403)
 def edit(key):
     """Edit Method."""
     try:
@@ -129,6 +141,7 @@ def edit(key):
 
 @user.route('/delete/<string:key>', methods=['GET'])
 @login_required
+# @admina.require(http_exception=403)
 def delete(key):
     """Delete Method."""
     try:

@@ -5,7 +5,13 @@ from flask_wtf import FlaskForm as Form
 from app.libs.validators import UniqueValidator
 from models import User
 # Import Form elements such as TextField and BooleanField (optional)
-from wtforms import TextField, PasswordField, ValidationError, HiddenField
+from wtforms import (
+    TextField,
+    PasswordField,
+    SelectField,
+    ValidationError,
+    HiddenField
+)
 
 # Import Form validators
 from wtforms.validators import(
@@ -28,6 +34,10 @@ from wtforms.validators import(
 #     if field.data != form.confirm.data:
 #         raise ValidationError(u'Las contraseñas deben coincidir')
 
+rol_choices = [('admin', 'Administrador'),
+               ('editor', 'Editor'),
+               ('viewer', 'Lectura')]
+
 
 class UserForm(Form):
     email = TextField('Correo Electronico', [
@@ -39,6 +49,10 @@ class UserForm(Form):
     name = TextField('Nombre',
                      [Length(max=25),
                       Required(message='Debe ingresar un Nombre')])
+    rol = SelectField('Rol',
+                      [Required(message='Debe seleccionar el Rol')],
+                      choices=rol_choices,
+                      coerce=unicode)
     password = PasswordField(u'Nueva Contraseña', [
         Length(max=8,
                min=6,
@@ -58,6 +72,10 @@ class EditUserForm(Form):
     name = TextField('Nombre',
                      [Length(max=25),
                       Required(message='Debe ingresar un Nombre')])
+    rol = SelectField('Rol',
+                      [Required(message='Debe seleccionar el Rol')],
+                      choices=rol_choices,
+                      coerce=unicode)
     password = PasswordField(u'Nueva Contraseña')
     confirm = PasswordField(u'Repita Contraseña')
     id = HiddenField('id')

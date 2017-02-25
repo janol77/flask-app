@@ -6,6 +6,7 @@ class User(db.Document):
     name = db.StringField(required=True)
     password = db.StringField()
     email = db.StringField(required=True)
+    rol = db.StringField(required=True)
     deleted = db.BooleanField()
 
     def generate_password(self):

@@ -1,7 +1,7 @@
 from flask_script import Manager
 from werkzeug import generate_password_hash
 from app.db import db
-from flask import Flask
+from flask import Flask, g
 from app.modules.user.models import User
 import os
 
@@ -24,18 +24,21 @@ manager = Manager(app)
 @manager.command
 def init_db():
     """Inicializar la base de datos."""
-
-    password = 'admin'
-    email = "admin@admin.cl"
-    name = "Administrador"
-    users = User.objects.filter(email=email)
+    user_admin = {
+        'password': 'admin',
+        'email': 'admin@admin.cl',
+        'name': 'Administrador',
+        'rol': 'admin',
+        'deleted': False
+    }
+    users = User.objects.filter(email=user_admin['email'])
     user = users.first()
-    if not user:
-        u = User(email=email, name=name, password=password)
-        u.generate_password()
-        u.save()
-    else:
-        print "Usuario Administrador creado anteriormente."
+    if user:
+        user.delete()
+    u = User(**user_admin)
+    u.generate_password()
+    u.save()
+    print "Usuario Administrador creado."
 
 
 if __name__ == "__main__":
