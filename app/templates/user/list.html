@@ -45,6 +45,7 @@
                         <tr>
                           <th>Nombre</th>
                           <th>Email</th>
+                          <th>Rol</th>
                           <th>Acciones</th>
                         </tr>
                       </thead>
@@ -52,6 +53,7 @@
                         <tr>
                           <th>Nombre</th>
                           <th>Email</th>
+                          <th>Rol</th>
                           <th>Acciones</th>
                         </tr>
                       </tfoot>
@@ -105,13 +107,22 @@
                     // `data` option, which defaults to the column being worked with, in
                     // this case `data: 0`.
                     "render": function ( data, type, row ) {
-                        console.log(row._id.$oid);
+                        var a = {{ rol_choices|tojson }};
+                        return a[data] 
+                    },
+                    "targets": 2
+                },
+                {
+                    // The `data` parameter refers to the data for the cell (defined by the
+                    // `data` option, which defaults to the column being worked with, in
+                    // this case `data: 0`.
+                    "render": function ( data, type, row ) {
                         html = '<a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Ver </a>\
                          <a href="'+'{{url_for("user.edit", key="")}}'+row._id.$oid+'" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>\
                          <a href="'+'{{url_for("user.delete", key="")}}'+row._id.$oid+'" class="btn btn-danger btn-xs" onclick="return confirm(`Está seguro que desea borrar este Usuario?`);"><i class="fa fa-trash-o"></i> Eliminar </a>';
                         return html;
                     },
-                    "targets": 2,
+                    "targets": 3,
                     "orderable": false,
                     "width": "20%"
                 }
@@ -120,6 +131,8 @@
               { "data": "name","className":"tr", // can be null or undefined
               "defaultContent": "<i>Not set</i>" },
               { "data": "email","className":"tr" , // can be null or undefined
+                  "defaultContent": "<i>Not set</i>"},
+              { "data": "rol","className":"tr" , // can be null or undefined
                   "defaultContent": "<i>Not set</i>"}
               ]
         });

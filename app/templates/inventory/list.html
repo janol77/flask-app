@@ -116,7 +116,6 @@
                     // `data` option, which defaults to the column being worked with, in
                     // this case `data: 0`.
                     "render": function ( data, type, row ) {
-                        console.log(row._id.$oid);
                         html = '<a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Ver </a>\
                          <a href="'+'{{url_for("inventory.edit", key="")}}'+row._id.$oid+'" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>\
                          <a href="'+'{{url_for("inventory.delete", key="")}}'+row._id.$oid+'" class="btn btn-danger btn-xs" onclick="return confirm(`Está seguro que desea borrar este Elemento?`);"><i class="fa fa-trash-o"></i> Eliminar </a>';

@@ -16,7 +16,7 @@ import re
 # Import the database object from the main app module
 import json
 
-from forms import UserForm, EditUserForm
+from forms import UserForm, EditUserForm, rol_choices
 
 # Import module models (i.e. User)
 from models import User
@@ -81,13 +81,14 @@ def list():
         return jsonify(response)
     return render_template("user/list.html",
                            menu=principal_menu(),
-                           config=config)
+                           config=config,
+                           rol_choices=dict(rol_choices))
 
 
 # Set the route and accepted methods
 @user.route('/create', methods=['GET', 'POST'])
 @login_required
-# @admina.require(http_exception=403)
+@admin.require(http_exception=403)
 def create():
     """Create Method."""
     form = UserForm(request.form)
@@ -108,7 +109,7 @@ def create():
 
 @user.route('/edit/<string:key>', methods=['GET', 'POST'])
 @login_required
-# @admina.require(http_exception=403)
+@admin.require(http_exception=403)
 def edit(key):
     """Edit Method."""
     try:
@@ -141,7 +142,7 @@ def edit(key):
 
 @user.route('/delete/<string:key>', methods=['GET'])
 @login_required
-# @admina.require(http_exception=403)
+@admin.require(http_exception=403)
 def delete(key):
     """Delete Method."""
     try:

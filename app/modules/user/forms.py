@@ -40,35 +40,36 @@ rol_choices = [('admin', 'Administrador'),
 
 
 class UserForm(Form):
-    email = TextField('Correo Electronico', [
+    email = TextField(u'Correo Electrónico', [
         Email(message=u"El Correo Electronico no es Válido"),
-        Required(message='Debe ingresar un correo electrónico'),
+        Required(message=u'Debe ingresar un correo electrónico'),
         UniqueValidator(User,
                         'email',
-                        'El Correo ya se utilizo para otra cuenta')])
+                        u'El Correo ya se utilizó para otra cuenta')])
     name = TextField('Nombre',
                      [Length(max=25),
                       Required(message='Debe ingresar un Nombre')])
     rol = SelectField('Rol',
                       [Required(message='Debe seleccionar el Rol')],
                       choices=rol_choices,
-                      coerce=unicode)
+                      coerce=unicode,
+                      default='viewer')
     password = PasswordField(u'Nueva Contraseña', [
         Length(max=8,
                min=6,
                message=u'La contraseña debe tener entre 6 y 8 carácteres'),
         DataRequired(message=u'Debe ingresar una contraseña válida'),
-        EqualTo('confirm', message='Las contraseñas deben coincidir')])
+        EqualTo('confirm', message=u'Las contraseñas deben coincidir')])
     confirm = PasswordField(u'Repita Contraseña')
 
 
 class EditUserForm(Form):
-    email = TextField('Correo Electronico', [
+    email = TextField(u'Correo Electrónico', [
         Email(message=u"El Correo Electronico no es Válido"),
-        Required(message='Debe ingresar un correo electrónico'),
+        Required(message=u'Debe ingresar un correo electrónico'),
         UniqueValidator(User,
                         'email',
-                        'El Correo ya se utilizo para otra cuenta')])
+                        u'El Correo ya se utilizó para otra cuenta')])
     name = TextField('Nombre',
                      [Length(max=25),
                       Required(message='Debe ingresar un Nombre')])
@@ -91,9 +92,9 @@ class EditUserForm(Form):
 
 
 class LoginForm(Form):
-    email = TextField('Email Address', [
+    email = TextField(u'Correo Electrónico', [
         Email(message=u"El Correo Electronico no es Válido"),
-        Required(message='Debe ingresar un correo electrónico')],
+        Required(message=u'Debe ingresar un correo electrónico')],
         render_kw={"placeholder": u"Ingrese su Email"})
     password = PasswordField(u'Contraseña', [
         DataRequired(message=u'Debe ingresar una contraseña válida')],
