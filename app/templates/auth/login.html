@@ -19,7 +19,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentellela Alela! | </title>
+    <title>Demo1 | OpenVita</title>
 
     <!-- Bootstrap -->
     <link href="/static/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -46,7 +46,7 @@
         <div class="animate form login_form">
           <section class="login_content">
             <form method="POST" action="login" accept-charset="UTF-8" role="form">
-              <h1>Login Form</h1>
+              <h1>Ingreso</h1>
               <div>
                     {{ form.hidden_tag() }}
 
@@ -84,22 +84,24 @@
       <!-- {{ render_field(form.password, placeholder="Password") }} -->
       <!-- {{ render_field(form.email, placeholder="Your Email Address", autofocus="") }} -->
               <div>
-                <button class="btn btn-default submit" type="submit" name="submit">Sign in</button>
-                <a class="reset_pass" href="#">Lost your password?</a>
+                <button class="btn btn-default submit" type="submit" name="submit">Ingresar</button>
+                <a class="reset_pass" href="#">Olvidaste tu contraseña?</a>
               </div>
 
               <div class="clearfix"></div>
 
               <div class="separator">
-                <p class="change_link">New to site?
-                  <a href="#signup" class="to_register"> Create Account </a>
+                <p class="change_link">Nuevo en este sitio?
+                  <a href="#signup" class="to_register"> Crea una Cuenta </a>
                 </p>
 
                 <div class="clearfix"></div>
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
+                  <div class="">
+                    <img src="/static/images/logo.png" alt="..." class="">
+                  </div>
                   <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
                 </div>
               </div>
@@ -112,30 +114,32 @@
             <form>
               <h1>Create Account</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
+                <input type="text" class="form-control" placeholder="Nombre" required="" />
               </div>
               <div>
-                <input type="email" class="form-control" placeholder="Email" required="" />
+                <input type="email" class="form-control" placeholder="Correo" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
+                <input type="password" class="form-control" placeholder="Contraseña" required="" />
               </div>
               <div>
-                <a class="btn btn-default submit" href="index.html">Submit</a>
+                <a class="btn btn-default submit" href="index.html">Crear</a>
               </div>
 
               <div class="clearfix"></div>
 
               <div class="separator">
-                <p class="change_link">Already a member ?
-                  <a href="#signin" class="to_register"> Log in </a>
+                <p class="change_link">Ya tienes una cuenta ?
+                  <a href="#signin" class="to_register"> Ingresar </a>
                 </p>
 
                 <div class="clearfix"></div>
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
+                  <div class="">
+                    <img src="/static/images/logo.png" alt="..." class="">
+                  </div>
                   <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
                 </div>
               </div>
