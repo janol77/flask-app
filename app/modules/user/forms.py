@@ -10,7 +10,8 @@ from wtforms import (
     PasswordField,
     SelectField,
     ValidationError,
-    HiddenField
+    HiddenField,
+    BooleanField
 )
 
 # Import Form validators
@@ -37,6 +38,10 @@ from wtforms.validators import(
 rol_choices = [('admin', 'Administrador'),
                ('editor', 'Editor'),
                ('viewer', 'Lectura')]
+state_choices = [('confirm', 'Confirmar Correo'),
+                 ('confirmed', 'Correo Confirmado'),
+                 ('reset', u'Cambio de Contraseña'),
+                 ('email_reset', u'Cambio de Correo')]
 
 
 class UserForm(Form):
@@ -49,18 +54,26 @@ class UserForm(Form):
     name = TextField('Nombre',
                      [Length(max=25),
                       Required(message='Debe ingresar un Nombre')])
+    active = BooleanField('Activo')
     rol = SelectField('Rol',
                       [Required(message='Debe seleccionar el Rol')],
                       choices=rol_choices,
                       coerce=unicode,
                       default='viewer')
+
+
+class PasswordForm(Form):
     password = PasswordField(u'Nueva Contraseña', [
         Length(max=8,
                min=6,
                message=u'La contraseña debe tener entre 6 y 8 carácteres'),
         DataRequired(message=u'Debe ingresar una contraseña válida'),
-        EqualTo('confirm', message=u'Las contraseñas deben coincidir')])
-    confirm = PasswordField(u'Repita Contraseña')
+        EqualTo('confirm', message=u'Las contraseñas deben coincidir')],
+        render_kw={"placeholder": u"Ingrese Nueva Password"})
+    confirm = PasswordField(u'Repita Contraseña',
+      render_kw={"placeholder": u"Confirme Nueva Password"})
+    id = HiddenField('id')
+    code = HiddenField('code')
 
 
 class EditUserForm(Form):
@@ -73,6 +86,7 @@ class EditUserForm(Form):
     name = TextField('Nombre',
                      [Length(max=25),
                       Required(message='Debe ingresar un Nombre')])
+    active = BooleanField('Activo')
     rol = SelectField('Rol',
                       [Required(message='Debe seleccionar el Rol')],
                       choices=rol_choices,

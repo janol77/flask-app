@@ -58,6 +58,8 @@ class TestUser(unittest2.TestCase):
         data = {'email': self.email,
                 'name': randomword(8),
                 'password': '',
+                'active': True,
+                'state': "confirmed",
                 'rol': 'admin',
                 'confirm': '',
                 'id': self.users_ids[self.name]}

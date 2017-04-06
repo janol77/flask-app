@@ -66,8 +66,8 @@
                   {% for item in menu %}
                   <li><a><i class="fa fa-edit"></i> {{ item['name'] }} <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      {% for name, link in item['menu'].iteritems() %}
-                      <li><a href="{{url_for(link)}}">{{ name }}</a></li>
+                      {% for submenu, data in item['menu'].iteritems() %}
+                      <li><a href="{{url_for(data['link'])}}">{{ data['name'] }}</a></li>
                       {% endfor %}
                     </ul>
                   </li>

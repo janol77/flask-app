@@ -28,6 +28,7 @@ from flask_principal import (
     ActionNeed,
     Permission
 )
+from urlparse import urlparse, parse_qs
 from werkzeug import check_password_hash
 
 login_manager = LoginManager()
@@ -88,13 +89,23 @@ def login():
     if form.validate_on_submit():
         users = User.objects.filter(email=form.email.data)
         user = users.first()
-        if user and check_password_hash(user.password, form.password.data):
-            login_user(user, remember=False)
-            # Tell Flask-Principal the identity changed
-            identity = Identity(user.rol)
-            identity_changed.send(current_app._get_current_object(), identity=identity)
-            flash("logeado Correctamente", "success")
-            return redirect(url_for("index"))
+        if user:
+            if not user.active:
+                flash("Cuenta Desactivada", "info")
+                return redirect("/auth/login")
+            elif check_password_hash(user.password, form.password.data):
+                login_user(user, remember=False)
+                # Tell Flask-Principal the identity changed
+                identity = Identity(user.rol)
+                identity_changed.send(current_app._get_current_object(), identity=identity)
+                flash("Logeado Correctamente", "success")
+                o = urlparse(request.referrer)
+                query = parse_qs(o.query)
+                if 'next' in query:
+                    _next = query['next'][0]
+                    return redirect(_next)
+                else:
+                    return redirect(url_for("index"))
         flash("Credenciales invalidas", "error")
 
     return render_template("auth/login.html", form=form)

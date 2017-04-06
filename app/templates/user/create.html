@@ -27,6 +27,38 @@
                   </div>
                   <div class="x_content">
                     <br />
+                    {% if action =='view' %}
+                    <form class="form-horizontal form-label-left">
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="{{form.name.name}}">{{form.name.label}}
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        {{form.name(class="form-control col-md-7 col-xs-12", disabled=True)}}
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="{{form.email.name}}">{{form.email.label}}
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        {{form.email(type="email", class="form-control col-md-7 col-xs-12", disabled=True)}}
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="{{form.active.name}}">{{form.active.label}}
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        {{form.active(class="form-control col-md-7 col-xs-12", disabled=True)}}
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="{{form.rol.name}}">{{form.rol.label}}
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        {{form.rol(class="form-control col-md-7 col-xs-12", disabled=True)}}
+                        </div>
+                      </div>                 
+                    </form>
+                    {% else %}
                     <form id="demo-form2" data-parsley-validate method="POST" action="{{ request.path }}" class="form-horizontal form-label-left">
                      {{ form.hidden_tag() }}
                       <div class="form-group">
@@ -66,6 +98,24 @@
                         {% endif %}
                       </div>
                       <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="{{form.active.name}}">{{form.active.label}}
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                      {% if form.active.errors %}
+                        {{form.active(class="form-control col-md-7 col-xs-12", style="border:1px solid #a94442")}}
+                      {% else %}
+                        {{form.active(class="form-control col-md-7 col-xs-12")}}
+                      {% endif %}
+                        </div>
+                          {% if form.active.errors %}
+                        <ul class="errors text-danger">
+                          {% for error in form.active.errors %}
+                            <li>{{ error }}</li>
+                          {% endfor %}
+                        </ul>
+                        {% endif %}
+                      </div>
+                      <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="{{form.rol.name}}">{{form.rol.label}}
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -83,48 +133,23 @@
                         </ul>
                         {% endif %}
                       </div>
-                      <div class="item form-group">
-                        <label for="{{form.password.name}}" class="control-label col-md-3">{{form.password.label}}</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                      {% if form.password.errors %}
-                        {{form.password(class="form-control col-md-7 col-xs-12", style="border:1px solid #a94442")}}
-                      {% else %}
-                        {{form.password(class="form-control col-md-7 col-xs-12")}}
-                      {% endif %}                        
+                      {% if action =='edit' %}
+                      {{form.id.value}}
+                      <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                            <a href="{{ url_for('user.reset_password', key=form.data['id']) }}" class="btn btn-info" role="button">Restablecer Contraseña</a>
                         </div>
-                        {% if form.password.errors %}
-                        <ul class="errors text-danger">
-                          {% for error in form.password.errors %}
-                            <li>{{ error }}</li>
-                          {% endfor %}
-                        </ul>
-                        {% endif %}                        
                       </div>
-                      <div class="item form-group">
-                        <label for="{{form.confirm.name}}" class="control-label col-md-3">{{form.confirm.label}}</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                      {% if form.confirm.errors %}
-                        {{form.confirm(class="form-control col-md-7 col-xs-12", style="border:1px solid #a94442")}}
-                      {% else %}
-                        {{form.confirm(class="form-control col-md-7 col-xs-12")}}
-                      {% endif %}                        
-                        </div>
-                        {% if form.confirm.errors %}
-                        <ul class="errors text-danger">
-                          {% for error in form.confirm.errors %}
-                            <li>{{ error }}</li>
-                          {% endfor %}
-                        </ul>
-                        {% endif %}                        
-                      </div>
+                      {% endif %}
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                          <a href="{{url_for("user.list")}}" class="btn btn-primary">Cancelar</a>
+                          <a href="{{url_for('user.list')}}" class="btn btn-primary">Cancelar</a>
                           <button type="submit" class="btn btn-success">Guardar</button>
                         </div>
                       </div>
                     </form>
+                    {% endif %}
                   </div>
                 </div>
               </div>

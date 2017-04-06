@@ -17,6 +17,7 @@ from models import Inventory
 from . import inventory, config
 # from inventory import principal_menu
 from app.modules import principal_menu
+from app.login import admin, editor, user as view
 
 
 @inventory.route('/', methods=['GET'])
@@ -72,6 +73,7 @@ def list():
 
 
 @inventory.route('/create', methods=['GET', 'POST'])
+@editor.require(http_exception=403)
 @login_required
 def create():
     """Create Method."""
@@ -91,6 +93,7 @@ def create():
 
 
 @inventory.route('/edit/<string:key>', methods=['GET', 'POST'])
+@editor.require(http_exception=403)
 @login_required
 def edit(key):
     """Edit Method."""
@@ -120,7 +123,26 @@ def edit(key):
                                config=config)
 
 
+@inventory.route('/view/<string:key>', methods=['GET'])
+@login_required
+def view(key):
+    """Edit Method."""
+    try:
+        element = Inventory.objects.filter(deleted=False,
+                                           id=key).first()
+    except Exception:
+        flash("Elemento No encontrado", "error")
+        return redirect(url_for("inventory.list"))
+    form = InventoryForm(request.form, element)
+    return render_template("inventory/create.html",
+                           action="view",
+                           form=form,
+                           menu=principal_menu(),
+                           config=config)
+
+
 @inventory.route('/delete/<string:key>', methods=['GET'])
+@editor.require(http_exception=403)
 @login_required
 def delete(key):
     """Delete Method."""

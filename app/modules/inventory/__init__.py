@@ -4,8 +4,8 @@ from flask import Blueprint
 inventory = Blueprint('inventory', __name__)
 config = {}
 config['name'] = "Inventario"
-config['menu'] = {'Lista': 'inventory.list',
-                  'Crear': 'inventory.create'}
+config['menu'] = {'list': {'link': 'inventory.list', 'name': 'Lista'},
+                  'create': {'link': 'inventory.create', 'name': 'Crear'}}
 
 from controllers import *
 

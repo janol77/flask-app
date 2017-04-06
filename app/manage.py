@@ -28,13 +28,12 @@ def init_db():
         'password': 'admin',
         'email': 'admin@admin.cl',
         'name': 'Administrador',
+        'active': True,
+        'state': "confirmed",
         'rol': 'admin',
         'deleted': False
     }
-    users = User.objects.filter(email=user_admin['email'])
-    user = users.first()
-    if user:
-        user.delete()
+    qt = User.objects.filter(email=user_admin['email']).delete()
     u = User(**user_admin)
     u.generate_password()
     u.save()

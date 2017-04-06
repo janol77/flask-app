@@ -55,6 +55,16 @@ def create_app(config="config.ini"):
     def not_found(error):
         return render_template('404.html'), 404
 
+    # Sample HTTP error handling
+    @app.errorhandler(403)
+    def access_denied(error):
+        return render_template('403.html'), 403
+
+    # Sample HTTP error handling
+    @app.errorhandler(500)
+    def server_full(error):
+        return render_template('500.html'), 500
+
     @app.before_request
     def make_session_permanent():
         session.permanent = True

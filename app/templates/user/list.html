@@ -46,6 +46,7 @@
                           <th>Nombre</th>
                           <th>Email</th>
                           <th>Rol</th>
+                          <th>Estado</th>
                           <th>Acciones</th>
                         </tr>
                       </thead>
@@ -54,6 +55,7 @@
                           <th>Nombre</th>
                           <th>Email</th>
                           <th>Rol</th>
+                          <th>Estado</th>
                           <th>Acciones</th>
                         </tr>
                       </tfoot>
@@ -113,16 +115,26 @@
                     "targets": 2
                 },
                 {
+                    "render": function ( data, type, row ) {
+                        if(data){
+                          var a = {{ state_choices|tojson }};
+                          return a[data] 
+                        }
+                        return "Sin Estado"
+                    },
+                    "targets": 3
+                },
+                {
                     // The `data` parameter refers to the data for the cell (defined by the
                     // `data` option, which defaults to the column being worked with, in
                     // this case `data: 0`.
                     "render": function ( data, type, row ) {
-                        html = '<a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Ver </a>\
+                        html = '<a href="'+'{{url_for("user.view", key="")}}'+row._id.$oid+'" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Ver </a>\
                          <a href="'+'{{url_for("user.edit", key="")}}'+row._id.$oid+'" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>\
                          <a href="'+'{{url_for("user.delete", key="")}}'+row._id.$oid+'" class="btn btn-danger btn-xs" onclick="return confirm(`Está seguro que desea borrar este Usuario?`);"><i class="fa fa-trash-o"></i> Eliminar </a>';
                         return html;
                     },
-                    "targets": 3,
+                    "targets": 4,
                     "orderable": false,
                     "width": "20%"
                 }
@@ -133,6 +145,8 @@
               { "data": "email","className":"tr" , // can be null or undefined
                   "defaultContent": "<i>Not set</i>"},
               { "data": "rol","className":"tr" , // can be null or undefined
+                  "defaultContent": "<i>Not set</i>"},
+              { "data": "state","className":"tr" , // can be null or undefined
                   "defaultContent": "<i>Not set</i>"}
               ]
         });
